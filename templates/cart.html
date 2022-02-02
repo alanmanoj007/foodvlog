@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+<style>
+.row {
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  -ms-flex-wrap: wrap; /* IE10 */
+  flex-wrap: wrap;
+  margin: 16px;
+}
+
+.col-25 {
+  -ms-flex: 25%; /* IE10 */
+  flex: 5%;
+}
+
+.col-50 {
+  -ms-flex: 50%; /* IE10 */
+  flex: 50%;
+}
+
+.col-75 {
+  -ms-flex: 75%; /* IE10 */
+  flex: 75%;
+}
+
+.col-25,
+.col-50,
+.col-75 {
+  padding: 0 16px;
+}
+
+.container {
+  background-color: #f2f2f2;
+  padding: 5px 10px 15px 20px;
+  border: 1px solid blue;
+  border-radius: 20px;
+}
+
+input[type=text] {
+  width: 10%;
+  margin-bottom: 20px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+label {
+  margin-bottom: 20px;
+  display: block;
+}
+
+.icon-container {
+  margin-bottom: 20px;
+  padding: 7px 0;
+  font-size: 10px;
+}
+
+.btn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  width: 100%;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 10px;
+}
+
+.btn:hover {
+  background-color: #45a049;
+}
+
+span.price {
+  float: right;
+  color: grey;
+}
+
+/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (and change the direction - make the "cart" column go on top) */
+@media (max-width: 800px) {
+  .row {
+    flex-direction: column-reverse;
+  }
+  .col-25 {
+    margin-bottom: 20px;
+  }
+}
+</style>
+</head>
+<body>
+<h4>Cart</h4>
+        <span class="price" style="color:black">
+          <i class="fa fa-shopping-cart"></i>
+        </span>
+
+
+
+{% for i in ci %}
+      <div class="col-25">
+      <div class="container">
+
+          <a href="{% url 'remove' i.prodt.id %}"><i class="fa fa-trash" style="font-size:20px;color:black" ></i></a> &nbsp;<a href="{{i.prodt.get_url}}"> <img src="{{i.prodt.img.url}}"alt="{{i.prodt.name}}" style="height:70;width:70">
+      <p>{{i.prodt.name}}</a> <span class="price">Price:{{i.total}}rs <br><a href="{% url 'addcart' i.prodt.id %}"><i class="fa fa-plus" style="font-size:14px"></i></a>&nbsp;&nbsp;{{i.quan}}&nbsp;&nbsp;<a href="{% url 'cart_decrement' i.prodt.id %}"><i class="fa fa-minus" style="font-size:14px"></i></a> </span></p>
+          <p>{{i.prodt.price}}rs x 1</p>
+      <p>Qty:{{i.quan}}</p>
+      <hr>
+
+
+    </div>
+  </div>
+
+
+{% endfor %}
+<div>
+<p> <span class="price" style="color:white; background-color:black"><b>Total : {{t}}rupees</b></span></p>
+</div>
+<br><br><br><br><br><br><br><br>
+</body>
+</html>
+{% endblock %}
